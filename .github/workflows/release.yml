@@ -25,6 +25,7 @@ jobs:
 
       - name: Install yarn
         run: |
+          cd plugin-analytics
           corepack enable && corepack prepare yarn@4.2.2 --activate
 
       - name: Install dependencies
