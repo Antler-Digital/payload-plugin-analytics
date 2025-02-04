@@ -100,8 +100,8 @@ export default function PaginatedTable<DataItem>({
     );
 
   return (
-    <div className="space-y-4">
-      <div className="rounded-md border">
+    <div className="tw-space-y-4">
+      <div className="tw-rounded-md">
         <Table className="tw-table-fixed ">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
