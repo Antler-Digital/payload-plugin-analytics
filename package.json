@@ -16,7 +16,7 @@
     "build:analytics": "node --loader ts-node/esm src/scripts/minify-script.ts",
     "test": "echo \"Error: no test specified\"",
     "lint": "echo \"Error: no lint specified\"",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "npm run build"
   },
   "publishConfig": {
     "access": "public"
