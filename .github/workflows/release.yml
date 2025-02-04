@@ -28,7 +28,7 @@ jobs:
           corepack enable && corepack prepare yarn@4.2.2 --activate
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable-cache
 
       - name: Publish to NPM
         env:
