@@ -1,9 +1,10 @@
 {
-  "name": "antler-payload-plugins",
+  "name": "@antler-payload-plugins/plugin-analytics",
   "version": "1.0.0",
   "description": "A plugin for Payload 3.0 to track user activity",
   "license": "MIT",
   "type": "module",
+  "packageManager": "yarn@4.5.3",
   "exports": {
     ".": "./src/index.ts"
   },
@@ -16,13 +17,12 @@
     "build:analytics": "node --loader ts-node/esm src/scripts/minify-script.ts",
     "test": "echo \"Error: no test specified\"",
     "lint": "echo \"Error: no lint specified\"",
-    "prepublishOnly": "npm run build"
-  },
+    "prepublishOnly": "yarn build"
+  }, 
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "latest",
     "@payloadcms/next": "latest",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-dropdown-menu": "^2.1.2",
