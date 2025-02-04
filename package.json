@@ -4,7 +4,6 @@
   "description": "A plugin for Payload 3.0 to track user activity",
   "license": "MIT",
   "type": "module",
-  "packageManager": "yarn@4.5.3",
   "exports": {
     ".": "./src/index.ts"
   },
@@ -18,7 +17,7 @@
     "test": "echo \"Error: no test specified\"",
     "lint": "echo \"Error: no lint specified\"",
     "prepublishOnly": "yarn build"
-  }, 
+  },
   "publishConfig": {
     "access": "public"
   },
