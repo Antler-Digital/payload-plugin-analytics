@@ -25,10 +25,10 @@ jobs:
 
       - name: Install yarn
         run: |
-          corepack enable && corepack prepare yarn@4.2.2 --activate
+          corepack enable && corepack prepare yarn@4.5.3 --activate
 
       - name: Install dependencies
-        run: yarn install --immutable-cache
+        run: yarn install --immutable
 
       - name: Publish to NPM
         env:
