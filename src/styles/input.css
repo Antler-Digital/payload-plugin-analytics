@@ -5,6 +5,45 @@
 @import "tailwindcss-animate";
 
 @layer base {
+  *:where([class*="tw-"]),
+  ::after:where([class*="tw-"]),
+  ::before:where([class*="tw-"]),
+  ::backdrop:where([class*="tw-"]),
+  ::file-selector-button:where([class*="tw-"]) {
+    box-sizing: border-box; /* 1 */
+    margin: 0; /* 2 */
+    padding: 0; /* 2 */
+    border: 0 solid; /* 3 */
+  }
+
+  button:where([class*="tw-"]),
+  input:where([class*="tw-"]),
+  select:where([class*="tw-"]),
+  optgroup:where([class*="tw-"]),
+  textarea:where([class*="tw-"]),
+  ::file-selector-button:where([class*="tw-"]) {
+    font: inherit; /* 1 */
+    font-feature-settings: inherit; /* 1 */
+    font-variation-settings: inherit; /* 1 */
+    letter-spacing: inherit; /* 1 */
+    color: inherit; /* 1 */
+    border-radius: 0; /* 2 */
+    background-color: transparent; /* 3 */
+    opacity: 1; /* 4 */
+  }
+
+  table:where([class*="tw-"]) {
+    text-indent: 0; /* 1 */
+    border-color: inherit; /* 2 */
+    border-collapse: collapse; /* 3 */
+  }
+
+  button:where([class*="tw-"]),
+  input:where([type="button"], [type="reset"], [type="submit"], [class*="tw-"]),
+  ::file-selector-button:where([class*="tw-"]) {
+    appearance: button;
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;

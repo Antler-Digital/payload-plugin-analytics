@@ -1,3 +1,5 @@
 node_modules
 .yarnnode_modules
 .yarn
+node_modules
+.yarn
