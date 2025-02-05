@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: |
           rm -rf node_modules yarn.lock
-          yarn install
+          yarn install --refresh-lockfile
 
       - name: Publish to NPM
         env:
