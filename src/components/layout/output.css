@@ -230,40 +230,6 @@ button:where([class*="tw-"]),
   --chart-referrers: 0 0% 20% / 0.49;
 }
 
-.tw-container {
-  width: 100%;
-}
-
-@media (min-width: 640px) {
-  .tw-container {
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 768px) {
-  .tw-container {
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .tw-container {
-    max-width: 1024px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .tw-container {
-    max-width: 1280px;
-  }
-}
-
-@media (min-width: 1536px) {
-  .tw-container {
-    max-width: 1536px;
-  }
-}
-
 .tw-sr-only {
   position: absolute;
   width: 1px;
@@ -956,12 +922,12 @@ button:where([class*="tw-"]),
   padding-bottom: 0.5rem;
 }
 
-.tw-pb-3 {
-  padding-bottom: 0.75rem;
+.tw-pb-20 {
+  padding-bottom: 5rem;
 }
 
-.tw-pb-40 {
-  padding-bottom: 10rem;
+.tw-pb-3 {
+  padding-bottom: 0.75rem;
 }
 
 .tw-pl-8 {
@@ -986,10 +952,6 @@ button:where([class*="tw-"]),
 
 .tw-pt-8 {
   padding-top: 2rem;
-}
-
-.tw-pb-20 {
-  padding-bottom: 5rem;
 }
 
 .tw-text-left {

@@ -5,9 +5,9 @@ import { Dashboard, GetEvents, GetStats } from "../endpoints/events-endpoint";
 export function initEventsCollection(
   pluginOptions: AnalyticsPluginOptions,
 ): CollectionConfig {
-  const { slug } = pluginOptions;
+  const { collectionSlug: slug } = pluginOptions;
   return {
-    slug: slug ? `${slug}-events` : "analytics-events",
+    slug: `${slug}-events`,
 
     endpoints: [
       GetEvents(pluginOptions),
@@ -27,9 +27,7 @@ export function initEventsCollection(
       {
         name: "session_id",
         type: "relationship",
-        relationTo: (slug
-          ? `${slug}-sessions`
-          : "analytics-sessions") as CollectionSlug,
+        relationTo: `${slug}-sessions` as CollectionSlug,
         required: true,
       },
       {

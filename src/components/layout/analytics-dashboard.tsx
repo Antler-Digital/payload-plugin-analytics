@@ -92,7 +92,7 @@ export async function AnalyticsDashboard({
       visibleEntities={initPageResult.visibleEntities}
     >
       <Gutter>
-        <div className="tw-container tw-flex tw-flex-col tw-w-full tw-space-y-4 tw-pb-20">
+        <div className="tw-flex tw-flex-col tw-w-full tw-space-y-4 tw-pb-20">
           <FlexRow>
             <h1 className="tw-text-2xl tw-font-bold">Analytics Dashboard</h1>
             <SelectDateRange />

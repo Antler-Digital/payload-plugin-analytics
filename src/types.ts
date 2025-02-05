@@ -1,6 +1,9 @@
 export type AnalyticsPluginOptions = {
-  slug?: string;
+  collectionSlug?: string;
+  dashboardSlug?: string;
+  dashboardLinkLabel?: string;
   maxAgeInDays?: number;
+  isServerless?: boolean;
 };
 
 export type DeviceType = "desktop" | "mobile" | "tablet";

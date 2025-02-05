@@ -2,10 +2,10 @@ import { CollectionConfig } from "payload";
 import { AnalyticsPluginOptions } from "../types";
 
 export function initSessionsCollection({
-  slug,
+  collectionSlug: slug,
 }: AnalyticsPluginOptions): CollectionConfig {
   return {
-    slug: slug ? `${slug}-sessions` : "analytics-sessions",
+    slug: `${slug}-sessions`,
     admin: {
       hidden: true,
     },

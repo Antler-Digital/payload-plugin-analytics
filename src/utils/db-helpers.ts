@@ -1,5 +1,9 @@
-import { CollectionSlug, Payload } from 'payload'
-import { AnalyticsPluginOptions, CreateEventData, CreateSessionData } from '../types'
+import { CollectionSlug, Payload } from "payload";
+import {
+  AnalyticsPluginOptions,
+  CreateEventData,
+  CreateSessionData,
+} from "../types";
 
 export async function getExistingSession(
   payload: Payload,
@@ -7,8 +11,8 @@ export async function getExistingSession(
   ip_hash: string,
   domain: string,
 ) {
-  const { slug } = pluginOptions
-  const collection = (slug ? `${slug}-sessions` : 'analytics-sessions') as CollectionSlug
+  const { collectionSlug: slug } = pluginOptions;
+  const collection = `${slug}-sessions` as CollectionSlug;
   const session = await payload.find({
     // @ts-ignore
     collection,
@@ -21,9 +25,9 @@ export async function getExistingSession(
       },
     },
     limit: 1,
-  })
+  });
 
-  return session.totalDocs > 0 ? session.docs[0] : null
+  return session.totalDocs > 0 ? session.docs[0] : null;
 }
 
 export async function createSession(
@@ -31,14 +35,14 @@ export async function createSession(
   pluginOptions: AnalyticsPluginOptions,
   data: CreateSessionData,
 ) {
-  const { slug } = pluginOptions
-  const collection = (slug ? `${slug}-sessions` : 'analytics-sessions') as CollectionSlug
+  const { collectionSlug: slug } = pluginOptions;
+  const collection = slug as CollectionSlug;
   return await payload.create({
     // @ts-ignore
     collection,
     // @ts-ignore
     data,
-  })
+  });
 }
 
 export async function createEvent(
@@ -46,19 +50,22 @@ export async function createEvent(
   pluginOptions: AnalyticsPluginOptions,
   data: CreateEventData,
 ) {
-  const { slug } = pluginOptions
-  const collection = (slug ? `${slug}-events` : 'analytics-events') as CollectionSlug
+  const { collectionSlug: slug } = pluginOptions;
+  const collection = `${slug}-events` as CollectionSlug;
   return await payload.create({
     // @ts-ignore
     collection,
     // @ts-ignore
     data,
-  } as any)
+  } as any);
 }
 
-export async function getEvents(payload: Payload, pluginOptions: AnalyticsPluginOptions) {
-  const { slug } = pluginOptions
-  const collection = (slug ? `${slug}-events` : 'analytics-events') as CollectionSlug
+export async function getEvents(
+  payload: Payload,
+  pluginOptions: AnalyticsPluginOptions,
+) {
+  const { collectionSlug: slug } = pluginOptions;
+  const collection = `${slug}-events` as CollectionSlug;
   // @ts-ignore
-  return await payload.find({ collection })
+  return await payload.find({ collection });
 }
