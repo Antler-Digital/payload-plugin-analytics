@@ -1,5 +1,5 @@
 {
-  "name": "antler-payload-plugins",
+  "name": "payload-plugin-analytics",
   "version": "1.0.1",
   "description": "A plugin for Payload 3.0 to track user activity",
   "license": "MIT",
