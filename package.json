@@ -17,8 +17,7 @@
   "module": "./dist/index.js",
   "scripts": {
     "dev": "tailwindcss -i ./src/styles/input.css -o ./src/components/layout/output.css --watch",
-    "build": "tsup src/index.ts --format cjs,esm --dts --outDir dist",
-    "build:analytics": "node --loader ts-node/esm src/scripts/minify-script.ts",
+    "build": "tsup src/index.ts --format esm --dts --outDir dist",
     "test": "echo \"Error: no test specified\"",
     "lint": "echo \"Error: no lint specified\"",
     "prepublishOnly": "yarn build"
