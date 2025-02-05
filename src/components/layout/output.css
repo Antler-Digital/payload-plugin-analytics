@@ -988,6 +988,10 @@ button:where([class*="tw-"]),
   padding-top: 2rem;
 }
 
+.tw-pb-20 {
+  padding-bottom: 5rem;
+}
+
 .tw-text-left {
   text-align: left;
 }
