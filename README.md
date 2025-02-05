@@ -197,5 +197,3 @@ interface AnalyticsOptions {
 ## Support
 
 For issues or feature requests, please visit our GitHub repository.
-
-t
