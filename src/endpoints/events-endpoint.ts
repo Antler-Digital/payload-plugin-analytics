@@ -85,9 +85,8 @@ export function EventsEndpoint(
         // Handle session end
         if (req.query.event === "session_end" && req.query.duration) {
           // Just update the session, don't create an event
-          const collection = pluginOptions.slug
-            ? `${pluginOptions.slug}-sessions`
-            : "analytics-sessions";
+          const { collectionSlug: slug } = pluginOptions;
+          const collection = `${slug}-sessions`;
           await payload.update({
             // @ts-ignore
             collection: collection,
@@ -222,13 +221,9 @@ export function GetStats(pluginOptions: AnalyticsPluginOptions): Endpoint {
           );
         }
 
-        const { slug } = pluginOptions;
-        const collection = (
-          slug ? `${slug}-events` : "analytics-events"
-        ) as CollectionSlug;
-        const sessionsCollection = (
-          slug ? `${slug}-sessions` : "analytics-sessions"
-        ) as CollectionSlug;
+        const { collectionSlug: slug } = pluginOptions;
+        const collection = `${slug}-events` as CollectionSlug;
+        const sessionsCollection = `${slug}-sessions` as CollectionSlug;
 
         switch (widget) {
           case "top-pages":

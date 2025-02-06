@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 @import "@radix-ui/themes/styles.css";
-@import "tailwindcss-animate";
 
 @layer base {
   *:where([class*="tw-"]),

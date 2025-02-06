@@ -1201,10 +1201,6 @@ button:where([class*="tw-"]),
   animation-duration: 200ms;
 }
 
-/* @import "@radix-ui/themes/styles.css"; */
-
-/* @import "tailwindcss-animate"; */
-
 /* .DialogContent {
   @apply tw-bg-black tw-rounded-lg tw-shadow-lg tw-fixed tw-top-[50%] tw-left-[50%] tw-transform tw-translate-x-[-50%] tw-translate-y-[-50%] tw-max-w-3xl tw-max-h-[85vh] tw-p-10 tw-animate-in tw-animate-out tw-fade-out-0 tw-fade-in-0;
 } */
