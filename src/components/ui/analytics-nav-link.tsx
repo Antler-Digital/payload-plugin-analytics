@@ -1,5 +1,11 @@
 import Link from "next/link";
 
-export function AnalyticsNavLink() {
-  return <Link href="/admin/analytics">Analytics</Link>;
+export function AnalyticsNavLink({
+  label,
+  href,
+}: {
+  label: string;
+  href: string;
+}) {
+  return <Link href={href}>{label}</Link>;
 }

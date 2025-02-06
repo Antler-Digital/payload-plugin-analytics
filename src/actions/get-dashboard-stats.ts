@@ -341,12 +341,9 @@ export async function getDashboardData(
   opts: TableParams,
 ) {
   try {
-    const collection = pluginOptions.slug
-      ? `${pluginOptions.slug}-events`
-      : "analytics-events";
-    const sessionsCollection = pluginOptions.slug
-      ? `${pluginOptions.slug}-sessions`
-      : "analytics-sessions";
+    const { collectionSlug: slug } = pluginOptions;
+    const collection = `${slug}-events`;
+    const sessionsCollection = `${slug}-sessions`;
 
     const data = await payload.find({
       // @ts-ignore
