@@ -1,25 +1,25 @@
 {
   "name": "payload-plugin-analytics",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "A plugin for Payload 3.0 to track user activity",
   "license": "MIT",
   "type": "module",
   "packageManager": "yarn@4.5.3",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "import": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./rsc": {
-      "import": "./dist/exports/rsc.js",
-      "types": "./dist/exports/rsc.d.ts",
-      "default": "./dist/exports/rsc.js"
+      "import": "./src/exports/rsc.ts",
+      "types": "./src/exports/rsc.ts",
+      "default": "./src/exports/rsc.ts"
     },
     "./styles": {
-      "import": "./dist/exports/output.css",
-      "types": "./dist/exports/output.css",
-      "default": "./dist/exports/output.css"
+      "import": "./src/exports/output.css",
+      "types": "./src/exports/output.css",
+      "default": "./src/exports/output.css"
     }
   },
   "publishConfig": {
@@ -48,12 +48,12 @@
   "module": "./dist/index.js",
   "scripts": {
     "dev": "tailwindcss -i ./src/styles/input.css -o ./src/exports/output.css --watch",
-    "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/",
+    "build:dist_types": "tsc --emitDeclarationOnly --outDir ./dist_types",
+    "copy:dist_types": "copyfiles -u 2 \"dist_types/**/*.d.ts\" dist/",
     "build:css": "tailwindcss -i ./src/styles/input.css -o ./src/exports/output.css",
-    "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist",
-    "build:copyfiles": "yarn copyfiles",
+    "copy:styles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/",
     "build:swc": "swc ./src -d ./dist --config-file .swcrc-build --strip-leading-paths",
-    "build": "yarn build:css && yarn build:types && yarn build:swc && yarn copyfiles",
+    "build": "rm -rf dist types && yarn build:swc && yarn build:dist_types && yarn build:css && yarn copy:dist_types && yarn copy:styles",
     "test": "echo \"Error: no test specified\"",
     "lint": "echo \"Error: no lint specified\"",
     "prepublishOnly": "yarn build"
