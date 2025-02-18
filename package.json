@@ -1,25 +1,25 @@
 {
   "name": "payload-plugin-analytics",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "A plugin for Payload 3.0 to track user activity",
   "license": "MIT",
   "type": "module",
   "packageManager": "yarn@4.5.3",
   "exports": {
     ".": {
-      "import": "./src/index.ts",
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./rsc": {
-      "import": "./src/exports/rsc.ts",
-      "types": "./src/exports/rsc.ts",
-      "default": "./src/exports/rsc.ts"
+      "import": "./dist/exports/rsc.js",
+      "types": "./dist/exports/rsc.d.ts",
+      "default": "./dist/exports/rsc.js"
     },
     "./styles": {
-      "import": "./src/exports/output.css",
-      "types": "./src/exports/output.css",
-      "default": "./src/exports/output.css"
+      "import": "./dist/exports/output.css",
+      "types": "./dist/exports/output.css",
+      "default": "./dist/exports/output.css"
     }
   },
   "publishConfig": {
@@ -35,9 +35,9 @@
         "default": "./dist/exports/rsc.js"
       },
       "./styles": {
-        "import": "./src/exports/output.css",
-        "types": "./src/exports/output.css",
-        "default": "./src/exports/output.css"
+        "import": "./dist/exports/output.css",
+        "types": "./dist/exports/output.css",
+        "default": "./dist/exports/output.css"
       }
     },
     "main": "./dist/index.js",
