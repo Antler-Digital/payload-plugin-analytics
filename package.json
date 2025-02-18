@@ -54,7 +54,7 @@
     "copy:styles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/",
     "build:swc": "swc ./src -d ./dist --config-file .swcrc-build --strip-leading-paths",
     "build": "yarn clean && yarn build:css && yarn copy:styles && yarn build:swc && yarn build:dist_types && yarn copy:dist_types",
-    "clean": "rimraf -g {dist,*.tsbuildinfo,dist_types}",
+    "clean": "rm -rf dist && rm -rf dist_types",
     "clean:cache": "rimraf node_modules/.cache",
     "copyfiles": "copyfiles -u 1 \"src/**/*.{html,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/",
     "test": "echo \"Error: no test specified\"",
