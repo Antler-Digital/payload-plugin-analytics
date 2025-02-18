@@ -10,6 +10,8 @@
     "skipLibCheck": true,
     "strict": true,
     "esModuleInterop": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
