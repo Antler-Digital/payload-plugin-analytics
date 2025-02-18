@@ -1,4 +1,10 @@
 src/
-tailwind.config.ts
+./tailwind.config.js
+./tailwind.config.ts
 .swcrc-build
 .env
+.github
+.yarnrc.yml
+.yarn
+tsconfig.json
+.tsbuildinfo
