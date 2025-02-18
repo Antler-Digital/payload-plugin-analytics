@@ -1,6 +1,4 @@
 node_modules
-.yarn
-node_modules
+dist
 .env
 .yarn
-.npmrc
