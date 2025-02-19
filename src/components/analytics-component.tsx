@@ -87,9 +87,7 @@ export async function AnalyticsComponent({
     return <div>No data</div>;
   }
 
-  if (!initPageResult.visibleEntities) {
-    return <div>No visible entities</div>;
-  }
+  console.log(initPageResult);
 
   return (
     <DefaultTemplate
