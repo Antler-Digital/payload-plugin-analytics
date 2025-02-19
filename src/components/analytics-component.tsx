@@ -87,20 +87,19 @@ export async function AnalyticsComponent({
     return <div>No data</div>;
   }
 
-  const i18n = (initPageResult?.req?.i18n as any) || {};
-  const locale = initPageResult?.locale || "";
-  const visibleEntities = initPageResult?.visibleEntities || [];
-
   return (
     <DefaultTemplate
-      i18n={i18n}
+      {...initPageResult}
+      i18n={initPageResult.req.i18n as any}
       payload={payload}
-      visibleEntities={visibleEntities}
+      params={params || {}}
+      searchParams={searchParams || {}}
+      // i18n={initPageResult.req.i18n as any}
+      // payload={initPageResult.req.payload}
       // locale={initPageResult.locale}
-      // params={params}
       // permissions={initPageResult.permissions}
-      // searchParams={searchParams}
       // user={initPageResult.req.user || undefined}
+      // visibleEntities={initPageResult.visibleEntities}
     >
       <Gutter>
         <div className="tw-flex tw-flex-col tw-gap-4 tw-pb-10">
