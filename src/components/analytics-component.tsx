@@ -1,10 +1,13 @@
 import "../styles/input.css";
 
 import { DefaultTemplate } from "@payloadcms/next/templates";
+import { Gutter } from "@payloadcms/ui";
+import axios from "axios";
 import { redirect } from "next/navigation";
 
 import {
   DashboardData,
+  DashboardStats,
   getDashboardData,
 } from "../actions/get-dashboard-stats";
 import { AnalyticsPluginOptions, DateRange } from "../types";
@@ -23,7 +26,6 @@ import { SelectDateRange } from "./ui/select-date-range";
 
 // import { redirect } from 'next/navigation';
 import type { AdminViewProps, BasePayload } from "payload";
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 const FlexRow = ({
   children,
@@ -86,27 +88,18 @@ export async function AnalyticsComponent({
   }
 
   return (
-    <ErrorBoundary
-      errorComponent={(props) => {
-        console.log(props);
-        return <div>Error</div>;
-      }}
+    <DefaultTemplate
+      i18n={initPageResult.req.i18n as any}
+      locale={initPageResult.locale}
+      payload={initPageResult.req.payload}
+      permissions={initPageResult.permissions}
+      user={initPageResult.req.user || undefined}
+      visibleEntities={initPageResult.visibleEntities || []}
+      params={params}
+      searchParams={searchParams}
+      viewActions={[]}
     >
-      <DefaultTemplate
-        {...initPageResult}
-        i18n={initPageResult.req.i18n as any}
-        payload={payload}
-        params={params || {}}
-        searchParams={searchParams || {}}
-        // i18n={initPageResult.req.i18n as any}
-        // payload={initPageResult.req.payload}
-        // locale={initPageResult.locale}
-        // permissions={initPageResult.permissions}
-        // user={initPageResult.req.user || undefined}
-        // visibleEntities={initPageResult.visibleEntities}
-        p
-      >
-        {/* <Gutter> */}
+      <Gutter>
         <div className="tw-flex tw-flex-col tw-gap-4 tw-pb-10">
           <div className="tw-flex tw-flex-col tw-w-full tw-space-y-4">
             <FlexRow>
@@ -165,8 +158,7 @@ export async function AnalyticsComponent({
             <OperatingSystemsCard operatingSystems={data?.operating_systems} />
           </div>
         </div>
-        {/* </Gutter> */}
-      </DefaultTemplate>
-    </ErrorBoundary>
+      </Gutter>
+    </DefaultTemplate>
   );
 }
