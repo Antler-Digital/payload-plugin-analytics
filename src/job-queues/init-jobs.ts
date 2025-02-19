@@ -5,6 +5,11 @@ import { AnalyticsPluginOptions, VercelJson } from "../types";
 import type { Config, PayloadRequest, JobsConfig, Payload } from "payload";
 import { initDeleteHistoryTask } from "./delete-history-task";
 
+/**
+ * Initialises the plugin cron jobs if hosted on a dedicated server
+ * @param config
+ * @param pluginOptions
+ */
 export const initConfigJobs = (
   config: Config,
   pluginOptions: Required<AnalyticsPluginOptions>
@@ -44,7 +49,9 @@ export const initConfigJobs = (
         }
       }
 
-      if (!cronConfig.some(({ queue }) => queue === "nightly")) {
+      const existingCron = cronConfig.some(({ queue }) => queue === "nightly");
+
+      if (!existingCron) {
         cronConfig.push({
           queue: "nightly",
           cron: "0 * * * *",
@@ -56,6 +63,12 @@ export const initConfigJobs = (
   }
 };
 
+/**
+ * Initialises cron jobs for the plugin if hosted on Vercel
+ * @param pluginOptions
+ * @param payload
+ * @returns
+ */
 export const onInitCrons = async (
   pluginOptions: AnalyticsPluginOptions,
   payload: Payload
@@ -82,16 +95,18 @@ export const onInitCrons = async (
 
     const payloadNightlyCronPath = "/api/payload-jobs/run?queue=nightly";
 
-    if (fileContent.crons.some(({ path }) => path === payloadNightlyCronPath)) {
-      return;
+    const existingCron = fileContent.crons.some(
+      ({ path }) => path === payloadNightlyCronPath
+    );
+
+    if (!existingCron) {
+      fileContent.crons.push({
+        path: payloadNightlyCronPath,
+        schedule: "0 * * * *",
+      });
+
+      fs.writeFileSync(vercelJson, JSON.stringify(fileContent));
     }
-
-    fileContent.crons.push({
-      path: payloadNightlyCronPath,
-      schedule: "0 * * * *",
-    });
-
-    fs.writeFileSync(vercelJson, JSON.stringify(fileContent));
 
     await payload.jobs.queue({
       task: `${collectionSlug}_delete_history`,

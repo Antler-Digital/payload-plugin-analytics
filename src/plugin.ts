@@ -7,7 +7,7 @@ import { initSessionsCollection } from "./collections/sessions";
 import { EventsEndpoint } from "./endpoints/events-endpoint";
 import { onInitExtension } from "./utils/onInitExtension";
 import packageJSON from "../package.json";
-// import { initConfigJobs, onInitCrons } from "./job-queues/init-jobs";
+import { initConfigJobs, onInitCrons } from "./job-queues/init-jobs";
 
 const packageName = packageJSON.name;
 
@@ -25,11 +25,10 @@ export const analyticsPlugin =
       ...pluginOptions,
     };
 
-    const { dashboardSlug, dashboardLinkLabel, maxAgeInDays } =
-      safePluginOptions;
+    let { dashboardSlug, dashboardLinkLabel, maxAgeInDays } = safePluginOptions;
 
     if (dashboardSlug.startsWith("/")) {
-      safePluginOptions.dashboardSlug = dashboardSlug.replace(/^\//, "");
+      dashboardSlug = dashboardSlug.replace(/^\//, "");
     }
 
     const eventsCollection = initEventsCollection(safePluginOptions);
@@ -66,7 +65,7 @@ export const analyticsPlugin =
                 maxAgeInDays,
               },
             },
-            path: dashboardSlug,
+            path: `/${dashboardSlug}`,
           },
         },
 
@@ -75,7 +74,7 @@ export const analyticsPlugin =
           {
             path: `${packageName}/rsc`,
             exportName: "AnalyticsNavLink",
-            serverProps: {
+            clientProps: {
               label: dashboardLinkLabel,
               href: `/admin/${dashboardSlug}`,
             },
@@ -84,7 +83,7 @@ export const analyticsPlugin =
       },
     };
 
-    // initConfigJobs(config, safePluginOptions);
+    initConfigJobs(config, safePluginOptions);
 
     config.collections = [
       ...(config.collections || []),
@@ -98,7 +97,7 @@ export const analyticsPlugin =
       }
       // Add additional onInit code by using the onInitExtension function
       onInitExtension(safePluginOptions, payload);
-      // await onInitCrons(safePluginOptions, payload);
+      await onInitCrons(safePluginOptions, payload);
     };
 
     return config;
