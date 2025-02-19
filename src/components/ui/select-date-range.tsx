@@ -10,7 +10,11 @@ import {
   SelectValue,
 } from "./select";
 
-export function SelectDateRange() {
+export function SelectDateRange({
+  maxAgeInDays = 60,
+}: {
+  maxAgeInDays?: number;
+}) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -18,12 +22,12 @@ export function SelectDateRange() {
   const [dateRange, setDateRange] = useState("last_7_days");
 
   const dateRanges = [
-    { value: "last_1_day", label: "Last 1 day" },
-    { value: "last_3_days", label: "Last 3 days" },
-    { value: "last_7_days", label: "Last 7 days" },
-    { value: "last_30_days", label: "Last 30 days" },
-    { value: "last_60_days", label: "Last 60 days" },
-    { value: "all_time", label: "All time" },
+    { value: "last_1_day", label: "Last 1 day", days: 1 },
+    { value: "last_3_days", label: "Last 3 days", days: 3 },
+    { value: "last_7_days", label: "Last 7 days", days: 7 },
+    { value: "last_30_days", label: "Last 30 days", days: 30 },
+    { value: "last_60_days", label: "Last 60 days", days: 60 },
+    { value: "all_time", label: "All time", days: 0 },
   ];
 
   function handleDateRangeChange(value: string) {
@@ -49,11 +53,13 @@ export function SelectDateRange() {
           <SelectValue placeholder="Select date range" />
         </SelectTrigger>
         <SelectContent className="tw-border-zinc-800">
-          {dateRanges.map(({ value, label }) => (
-            <SelectItem key={value} className="tw-bg-card" value={value}>
-              {label}
-            </SelectItem>
-          ))}
+          {dateRanges
+            .filter(({ days }) => days <= maxAgeInDays)
+            .map(({ value, label }) => (
+              <SelectItem key={value} className="tw-bg-card" value={value}>
+                {label}
+              </SelectItem>
+            ))}
         </SelectContent>
       </Select>
     </div>

@@ -6,8 +6,8 @@ import { initEventsCollection } from "./collections/events";
 import { initSessionsCollection } from "./collections/sessions";
 import { EventsEndpoint } from "./endpoints/events-endpoint";
 import { onInitExtension } from "./utils/onInitExtension";
-import { initConfigJobs } from "./job-queues/init-jobs";
 import packageJSON from "../package.json";
+import { initConfigJobs, onInitCrons } from "./job-queues/init-jobs";
 
 const packageName = packageJSON.name;
 
@@ -18,15 +18,18 @@ export const analyticsPlugin =
 
     const safePluginOptions: Required<AnalyticsPluginOptions> = {
       collectionSlug: "analytics",
-      dashboardSlug: "/admin/analytics",
+      dashboardSlug: "/analytics",
       dashboardLinkLabel: "Analytics",
-      maxAgeInDays: 30,
+      maxAgeInDays: 60,
       isServerless: true,
       ...pluginOptions,
     };
 
-    if (!safePluginOptions.dashboardSlug?.startsWith("/")) {
-      throw new Error("dashboardSlug must start with '/'");
+    const { dashboardSlug, dashboardLinkLabel, maxAgeInDays } =
+      safePluginOptions;
+
+    if (dashboardSlug.startsWith("/")) {
+      safePluginOptions.dashboardSlug = dashboardSlug.replace(/^\//, "");
     }
 
     const eventsCollection = initEventsCollection(safePluginOptions);
@@ -57,20 +60,24 @@ export const analyticsPlugin =
           analyticsDashboard: {
             Component: {
               exportName: "AnalyticsComponent",
-              path: `${packageName}/rsc#AnalyticsComponent`,
+              path: `${packageName}/rsc`,
+              serverProps: {
+                pluginOptions: safePluginOptions,
+                maxAgeInDays,
+              },
             },
-            path: "/analytics",
+            path: dashboardSlug,
           },
         },
 
         afterNavLinks: [
           ...(config.admin?.components?.afterNavLinks || []),
           {
-            path: `${packageName}/rsc#AnalyticsNavLink`,
+            path: `${packageName}/rsc`,
             exportName: "AnalyticsNavLink",
             serverProps: {
-              label: safePluginOptions.dashboardLinkLabel,
-              href: safePluginOptions.dashboardSlug,
+              label: dashboardLinkLabel,
+              href: `/admin/${dashboardSlug}`,
             },
           },
         ],
@@ -79,7 +86,6 @@ export const analyticsPlugin =
 
     initConfigJobs(config, safePluginOptions);
 
-    console.log(config.jobs);
     config.collections = [
       ...(config.collections || []),
       eventsCollection,
@@ -92,11 +98,7 @@ export const analyticsPlugin =
       }
       // Add additional onInit code by using the onInitExtension function
       onInitExtension(safePluginOptions, payload);
-      // await payload.jobs.queue({
-      //   task: `${safePluginOptions.collectionSlug}_delete_history`,
-      //   queue: "nightly",
-      //   input: {},
-      // });
+      await onInitCrons(safePluginOptions, payload);
     };
 
     return config;
