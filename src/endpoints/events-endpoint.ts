@@ -39,11 +39,11 @@ const hashIpAddress = (ip: string) => {
 // 1x1 transparent GIF pixel (base64 encoded)
 const TRANSPARENT_PIXEL = Buffer.from(
   "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
-  "base64",
+  "base64"
 );
 
 export function EventsEndpoint(
-  pluginOptions: AnalyticsPluginOptions,
+  pluginOptions: AnalyticsPluginOptions
 ): Endpoint {
   return {
     path: "/events",
@@ -65,7 +65,7 @@ export function EventsEndpoint(
           payload,
           pluginOptions,
           hashedIp,
-          domain,
+          domain
         );
 
         const sessionData: CreateSessionData = {
@@ -153,48 +153,7 @@ export function GetEvents(pluginOptions: AnalyticsPluginOptions): Endpoint {
       } catch (error) {
         return Response.json(
           { message: "Internal server error" },
-          { status: 500 },
-        );
-      }
-    },
-  };
-}
-
-export function Dashboard(pluginOptions: AnalyticsPluginOptions): Endpoint {
-  return {
-    path: "/dashboard",
-    method: "post",
-    handler: async (req) => {
-      try {
-        const payload = req.payload;
-
-        let opts = {
-          date_range: "last_7_days",
-          date_change: undefined,
-          date_from: undefined,
-        } as TableParams;
-
-        try {
-          const json = await req?.json?.();
-
-          opts.date_from = json?.date_from;
-          opts.date_range = json?.date_range;
-          /**
-           * The date_change is the date from which the data is being compared to.
-           * eg if the date_from is 7 days ago, the date_change is 14 days ago.
-           */
-          opts.date_change = json?.date_change ?? undefined;
-        } catch (error) {
-          console.error("Error parsing request body", error);
-        }
-
-        const data = await getDashboardData(payload, pluginOptions, opts);
-
-        return new Response(JSON.stringify(data), { headers });
-      } catch (error) {
-        return Response.json(
-          { message: "Internal server error" },
-          { status: 500 },
+          { status: 500 }
         );
       }
     },
@@ -217,7 +176,7 @@ export function GetStats(pluginOptions: AnalyticsPluginOptions): Endpoint {
             JSON.stringify({ message: "Widget param is required" }),
             {
               headers,
-            },
+            }
           );
         }
 
@@ -230,37 +189,37 @@ export function GetStats(pluginOptions: AnalyticsPluginOptions): Endpoint {
             return await WebpageActions.getTopPages(
               payload,
               collection,
-              params as TableParams,
+              params as TableParams
             );
           case "top-referrers":
             return await WebpageActions.topReferrers(
               payload,
               collection,
-              params as TableParams,
+              params as TableParams
             );
           case "utm-tracking":
             return await WebpageActions.getUTMTracking(
               payload,
               sessionsCollection,
-              params as TableParams,
+              params as TableParams
             );
           case "browsers":
             return await WebpageActions.getBrowsers(
               payload,
               collection,
-              params as TableParams,
+              params as TableParams
             );
           case "devices":
             return await WebpageActions.getDevices(
               payload,
               collection,
-              params as TableParams,
+              params as TableParams
             );
           case "operating-systems":
             return await WebpageActions.getOperatingSystems(
               payload,
               collection,
-              params as TableParams,
+              params as TableParams
             );
 
           case "webpage-views":
@@ -274,12 +233,12 @@ export function GetStats(pluginOptions: AnalyticsPluginOptions): Endpoint {
           case "page-views-and-visitors":
             return await WebpageActions.getPageViewsAndVisitors(
               payload,
-              collection,
+              collection
             );
           case "visitor-geography":
             return await WebpageActions.getVisitorGeography(
               payload,
-              collection,
+              collection
             );
 
           default:
@@ -287,13 +246,13 @@ export function GetStats(pluginOptions: AnalyticsPluginOptions): Endpoint {
               JSON.stringify({ message: `Unrecognized param: ${widget}` }),
               {
                 headers,
-              },
+              }
             );
         }
       } catch (error) {
         return Response.json(
           { message: "Internal server error" },
-          { status: 500 },
+          { status: 500 }
         );
       }
     },

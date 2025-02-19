@@ -1,19 +1,15 @@
 import { CollectionConfig, CollectionSlug } from "payload";
 import { AnalyticsPluginOptions } from "../types";
-import { Dashboard, GetEvents, GetStats } from "../endpoints/events-endpoint";
+import { GetEvents, GetStats } from "../endpoints/events-endpoint";
 
 export function initEventsCollection(
-  pluginOptions: AnalyticsPluginOptions,
+  pluginOptions: AnalyticsPluginOptions
 ): CollectionConfig {
   const { collectionSlug: slug } = pluginOptions;
   return {
     slug: `${slug}-events`,
 
-    endpoints: [
-      GetEvents(pluginOptions),
-      GetStats(pluginOptions),
-      Dashboard(pluginOptions),
-    ],
+    endpoints: [GetEvents(pluginOptions), GetStats(pluginOptions)],
     admin: {
       hidden: true,
     },

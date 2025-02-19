@@ -92,7 +92,7 @@ export class DashboardStats {
     const visitors = new Set<string>();
     // assume client has been on the site for last 30 minutes
     const liveLimit = new Date(
-      Date.now() - MINUTES_AGO * 60 * 1000,
+      Date.now() - MINUTES_AGO * 60 * 1000
     ).toISOString();
     this.data.forEach((item) => {
       if (item.createdAt > liveLimit) {
@@ -128,16 +128,13 @@ export class DashboardStats {
 
     const total = Object.fromEntries(map);
 
-    return Object.entries(total).reduce(
-      (acc, [device, visitors], i) => {
-        acc.push({
-          [device.toLowerCase()]: visitors,
-          fill: `hsl(var(--chart-${i + 1}))`,
-        });
-        return acc;
-      },
-      [] as DashboardData["devices"],
-    );
+    return Object.entries(total).reduce((acc, [device, visitors], i) => {
+      acc.push({
+        [device.toLowerCase()]: visitors,
+        fill: `hsl(var(--chart-${i + 1}))`,
+      });
+      return acc;
+    }, [] as DashboardData["devices"]);
   }
 
   get operating_systems() {
@@ -182,7 +179,7 @@ export class DashboardStats {
 
       for (let i = hours; i > 0; i--) {
         const hour = DashboardStats.getHourFromDate(
-          new Date(Date.now() - i * 60 * 60 * 1000),
+          new Date(Date.now() - i * 60 * 60 * 1000)
         );
         if (!map.has(hour)) {
           map.set(hour, {
@@ -194,7 +191,7 @@ export class DashboardStats {
 
       this.data.forEach((item) => {
         const itemHour = DashboardStats.getHourFromDate(
-          new Date(item.createdAt),
+          new Date(item.createdAt)
         );
         if (map.has(itemHour)) {
           const _item = map.get(itemHour);
@@ -207,7 +204,7 @@ export class DashboardStats {
     } else if (this.opts.date_range === "last_7_days") {
       for (let i = 7; i >= 0; i--) {
         const day = DashboardStats.getDayFromDate(
-          new Date(Date.now() - i * 24 * 60 * 60 * 1000),
+          new Date(Date.now() - i * 24 * 60 * 60 * 1000)
         );
         map.set(day, { views: 0, visitors: new Set<string>() });
       }
@@ -329,7 +326,7 @@ export class DashboardStats {
         medium,
         source,
         visitors,
-      }),
+      })
     );
   }
 }
@@ -338,7 +335,7 @@ export async function getDashboardData(
   payload: BasePayload,
   pluginOptions: AnalyticsPluginOptions,
   /** ISO string */
-  opts: TableParams,
+  opts: TableParams
 ) {
   try {
     const { collectionSlug: slug } = pluginOptions;
@@ -383,7 +380,6 @@ export async function getDashboardData(
       limit: parseInt(opts.limit || "1000"),
     });
 
-    console.log("opts", opts);
     const dashboardStats = new DashboardStats(data.docs, rangeData.docs, opts);
 
     return {

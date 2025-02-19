@@ -50,10 +50,15 @@ analyticsPlugin({
 });
 ```
 
-| Option         | Description                                     | Default     |
-| -------------- | ----------------------------------------------- | ----------- |
-| `slug`         | The slug of the collection to use for analytics | `analytics` |
-| `maxAgeInDays` | The maximum age of the events stored in days    | `30`        |
+| Option               | Description                                                                                                         | Default      |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------ |
+| `collectionSlug`     | The slug of the collection to use for the analytics plugin. Two collections will be setup ("events" and "sessions") | `analytics`  |
+| `dashboardSlug`      | The route of the dashboard in the admin panel.                                                                      | `/analytics` |
+| `dashboardLinkLabel` | The label of the link in the admin dashboard.                                                                       | `Analytics`  |
+| `maxAgeInDays`       | The maximum age of the events stored in days.                                                                       | `30`         |
+| `isServerless`       | Whether payload will be deployed on Vercel or self-hosted. This is required to correctly setup cron jobs.           | `true`       |
+
+| ``
 
 ## Framework-Specific Installation
 
@@ -197,4 +202,3 @@ interface AnalyticsOptions {
 ## Support
 
 For issues or feature requests, please visit our GitHub repository.
-  

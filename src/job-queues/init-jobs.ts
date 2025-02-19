@@ -1,10 +1,13 @@
-import { AnalyticsPluginOptions } from "../types";
-import type { Config, PayloadRequest, JobsConfig } from "payload";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { AnalyticsPluginOptions, VercelJson } from "../types";
+import type { Config, PayloadRequest, JobsConfig, Payload } from "payload";
 import { initDeleteHistoryTask } from "./delete-history-task";
 
 export const initConfigJobs = (
   config: Config,
-  pluginOptions: Required<AnalyticsPluginOptions>,
+  pluginOptions: Required<AnalyticsPluginOptions>
 ) => {
   config.jobs = {
     tasks: [],
@@ -40,12 +43,65 @@ export const initConfigJobs = (
           cronConfig.concat(crons);
         }
       }
-      cronConfig.push({
-        queue: "nightly",
-        cron: "0 * * * *",
-      });
+
+      if (!cronConfig.some(({ queue }) => queue === "nightly")) {
+        cronConfig.push({
+          queue: "nightly",
+          cron: "0 * * * *",
+        });
+      }
 
       return cronConfig;
     };
+  }
+};
+
+export const onInitCrons = async (
+  pluginOptions: AnalyticsPluginOptions,
+  payload: Payload
+): Promise<void> => {
+  try {
+    const { isServerless, collectionSlug } = pluginOptions;
+
+    if (!isServerless) {
+      return;
+    }
+
+    const vercelJson = path.resolve(process.cwd(), "vercel.json");
+
+    let fileContent: VercelJson = {
+      crons: [],
+    };
+
+    if (fs.existsSync(vercelJson)) {
+      const content = JSON.parse(fs.readFileSync(vercelJson, "utf-8"));
+      fileContent = {
+        ...content,
+      };
+    }
+
+    const payloadNightlyCronPath = "/api/payload-jobs/run?queue=nightly";
+
+    if (fileContent.crons.some(({ path }) => path === payloadNightlyCronPath)) {
+      return;
+    }
+
+    fileContent.crons.push({
+      path: payloadNightlyCronPath,
+      schedule: "0 * * * *",
+    });
+
+    fs.writeFileSync(vercelJson, JSON.stringify(fileContent));
+
+    await payload.jobs.queue({
+      task: `${collectionSlug}_delete_history`,
+      queue: "nightly",
+      input: {},
+    });
+  } catch (err: unknown) {
+    payload.logger.error({
+      err,
+      msg: "Error creating Cron Jobs",
+    });
   }
 };
