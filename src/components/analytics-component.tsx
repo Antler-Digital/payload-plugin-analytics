@@ -87,6 +87,10 @@ export async function AnalyticsComponent({
     return <div>No data</div>;
   }
 
+  if (!initPageResult.visibleEntities) {
+    return <div>No visible entities</div>;
+  }
+
   return (
     <DefaultTemplate
       i18n={initPageResult.req.i18n as any}
@@ -94,7 +98,7 @@ export async function AnalyticsComponent({
       payload={initPageResult.req.payload}
       permissions={initPageResult.permissions}
       user={initPageResult.req.user || undefined}
-      visibleEntities={initPageResult.visibleEntities || []}
+      visibleEntities={initPageResult.visibleEntities || {}}
       params={params}
       searchParams={searchParams}
       viewActions={[]}
