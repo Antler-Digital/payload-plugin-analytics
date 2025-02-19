@@ -7,7 +7,7 @@ import { initSessionsCollection } from "./collections/sessions";
 import { EventsEndpoint } from "./endpoints/events-endpoint";
 import { onInitExtension } from "./utils/onInitExtension";
 import packageJSON from "../package.json";
-import { initConfigJobs, onInitCrons } from "./job-queues/init-jobs";
+// import { initConfigJobs, onInitCrons } from "./job-queues/init-jobs";
 
 const packageName = packageJSON.name;
 
@@ -84,7 +84,7 @@ export const analyticsPlugin =
       },
     };
 
-    initConfigJobs(config, safePluginOptions);
+    // initConfigJobs(config, safePluginOptions);
 
     config.collections = [
       ...(config.collections || []),
@@ -98,7 +98,7 @@ export const analyticsPlugin =
       }
       // Add additional onInit code by using the onInitExtension function
       onInitExtension(safePluginOptions, payload);
-      await onInitCrons(safePluginOptions, payload);
+      // await onInitCrons(safePluginOptions, payload);
     };
 
     return config;
