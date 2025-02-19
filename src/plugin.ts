@@ -59,7 +59,7 @@ export const analyticsPlugin =
               exportName: "AnalyticsComponent",
               path: `${packageName}/rsc#AnalyticsComponent`,
             },
-            path: safePluginOptions.dashboardSlug,
+            path: "/analytics",
           },
         },
 
