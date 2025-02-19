@@ -6,6 +6,7 @@ import axios from "axios";
 import { redirect } from "next/navigation";
 
 import {
+  DashboardData,
   DashboardStats,
   getDashboardData,
 } from "../actions/get-dashboard-stats";
@@ -68,11 +69,19 @@ export async function AnalyticsComponent({
     redirect("/admin");
   }
 
-  const { data } = await getDashboardData(payload, pluginOptions, {
-    date_change: getDateFrom(searchParams)?.date_change,
-    date_from: getDateFrom(searchParams)?.date_from,
-    date_range: searchParams?.date_range as DateRange,
-  });
+  let data: DashboardData | null = null;
+
+  try {
+    const result = await getDashboardData(payload, pluginOptions, {
+      date_change: getDateFrom(searchParams)?.date_change,
+      date_from: getDateFrom(searchParams)?.date_from,
+      date_range: searchParams?.date_range as DateRange,
+    });
+
+    data = result.data;
+  } catch (error) {
+    console.error(error);
+  }
 
   if (!data) {
     return <div>No data</div>;
@@ -80,7 +89,7 @@ export async function AnalyticsComponent({
 
   return (
     <DefaultTemplate
-      i18n={initPageResult.req.i18n}
+      i18n={initPageResult.req.i18n as any}
       locale={initPageResult.locale}
       params={params}
       payload={initPageResult.req.payload}
