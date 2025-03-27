@@ -1,3 +1,5 @@
+# DEPRECATED
+
 # Simple Analytics Client
 
 A lightweight, privacy-focused analytics solution that automatically tracks page views, UTM parameters, and user navigation patterns.
